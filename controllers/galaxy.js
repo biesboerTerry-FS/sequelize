@@ -1,29 +1,73 @@
 const { Galaxy, Star } = require("../models");
 
 const index = async (req, res) => {
-  const galaxies = await Galaxy.findAll({ include: [Star] });
-  res.status(200).json(galaxies);
+  try {
+    const galaxies = await Galaxy.findAll({ include: [Star] });
+    if (req.headers.accept && req.headers.accept.includes('text/html')) {
+      return res.render('galaxies/index', { galaxies });
+    }
+    res.status(200).json(galaxies);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 const show = async (req, res) => {
-  const galaxy = await Galaxy.findByPk(req.params.id, { include: [Star] });
-  res.status(200).json(galaxy);
+  try {
+    const galaxy = await Galaxy.findByPk(req.params.id, { include: [Star] });
+    if (req.headers.accept && req.headers.accept.includes('text/html')) {
+      // Show page now acts as the View and Update form
+      return res.render('galaxies/show', { galaxy });
+    }
+    res.status(200).json(galaxy);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 const create = async (req, res) => {
-  const galaxy = await Galaxy.create(req.body);
-  res.status(201).json(galaxy);
+  try {
+    const data = req.body;
+    if (req.file) {
+      data.image = `/uploads/galaxies/${req.file.filename}`;
+    }
+    const galaxy = await Galaxy.create(data);
+    if (req.headers.accept && req.headers.accept.includes('text/html')) {
+      return res.redirect('/galaxies');
+    }
+    res.status(201).json(galaxy);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 const update = async (req, res) => {
-  await Galaxy.update(req.body, { where: { id: req.params.id } });
-  const updated = await Galaxy.findByPk(req.params.id);
-  res.status(200).json(updated);
+  try {
+    const data = req.body;
+    if (req.file) {
+      data.image = `/uploads/galaxies/${req.file.filename}`;
+    }
+    await Galaxy.update(data, { where: { id: req.params.id } });
+    if (req.headers.accept && req.headers.accept.includes('text/html')) {
+      return res.redirect(`/galaxies/${req.params.id}`);
+    }
+    const updated = await Galaxy.findByPk(req.params.id);
+    res.status(200).json(updated);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 const remove = async (req, res) => {
-  await Galaxy.destroy({ where: { id: req.params.id } });
-  res.status(204).send();
+  try {
+    await Galaxy.destroy({ where: { id: req.params.id } });
+    if (req.headers.accept && req.headers.accept.includes('text/html')) {
+      return res.redirect('/galaxies');
+    }
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 module.exports = { index, show, create, update, remove };

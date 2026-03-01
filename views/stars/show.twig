@@ -1,0 +1,121 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+<div class="main-container">
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>Update Spectra</h3>
+            <form action="/stars/{{ star.id }}?_method=PUT" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" value="{{ star.name }}">
+                <select name="GalaxyId">
+                    {% for galaxy in galaxies %}
+                        <option value="{{ galaxy.id }}" {% if galaxy.id == star.GalaxyId %}selected{% endif %}>{{ galaxy.name }}</option>
+                    {% endfor %}
+                </select>
+                <textarea name="description">{{ star.description }}</textarea>
+                
+                <label for="img-upload" class="file-label">SELECT IMAGE</label>
+                <input type="file" name="image" id="img-upload" class="hidden-input">
+                
+                <button type="submit" class="btn-primary" style="display:block; width:100%; text-align:center; background: rgba(255,255,255,0.05);">Update Data</button>
+            </form>
+            <a href="/stars" class="btn-primary" style="display:block; text-align:center; margin-top:10px; background: rgba(255,255,255,0.05);">Cancel</a>
+            
+            <form action="/stars/{{ star.id }}?_method=DELETE" method="POST" style="margin-top: 10px;">
+                <button type="submit" class="btn-danger" style="width: 100%;">Purge Star</button>
+            </form>
+        </div>
+    </aside>
+
+    <section class="content-area">
+        <div class="glass-panel" style="text-align: center;">
+            <h1>{{ star.name }}</h1>
+            {% if star.image %}
+                <img src="{{ star.image }}" class="main-img">
+            {% else %}
+                <div class="no-data-placeholder">No Visual Data Available</div>
+            {% endif %}
+        </div>
+    </section>
+
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>System Analysis</h3>
+            <p>{{ star.description }}</p>
+            <hr>
+            <p><strong>Parent Galaxy:</strong> 
+                <a href="/galaxies/{{ star.Galaxy.id }}">{{ star.Galaxy.name }}</a>
+            </p>
+            
+            <h4>Orbiting Bodies:</h4>
+            <ul>
+                {% for planet in star.Planets %}
+                    <li><a href="/planets/{{ planet.id }}">{{ planet.name }}</a> ({{ planet.type }})</li>
+                {% else %}
+                    <li>No planets detected in this system.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+</div>
+{% endblock %}{% extends 'layout.twig' %}
+
+{% block content %}
+<div class="main-container">
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>Update Spectra</h3>
+            <form action="/stars/{{ star.id }}?_method=PUT" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" value="{{ star.name }}">
+                <select name="GalaxyId">
+                    {% for galaxy in galaxies %}
+                        <option value="{{ galaxy.id }}" {% if galaxy.id == star.GalaxyId %}selected{% endif %}>{{ galaxy.name }}</option>
+                    {% endfor %}
+                </select>
+                <textarea name="description">{{ star.description }}</textarea>
+                
+                <label for="img-upload" class="file-label">Select Image</label>
+                <input type="file" name="image" id="img-upload" class="hidden-input">
+                
+                <button type="submit" class="btn-primary" style="display:block; width:100%; text-align:center; background: rgba(255,255,255,0.05);">Update Data</button>
+            </form>
+            <a href="/stars" class="btn-primary" style="display:block; text-align:center; margin-top:10px; background: rgba(255,255,255,0.05);">Cancel</a>
+            
+            <form action="/stars/{{ star.id }}?_method=DELETE" method="POST" style="margin-top: 10px;">
+                <button type="submit" class="btn-danger" style="width: 100%;">Purge Star</button>
+            </form>
+        </div>
+    </aside>
+
+    <section class="content-area">
+        <div class="glass-panel" style="text-align: center;">
+            <h1>{{ star.name }}</h1>
+            {% if star.image %}
+                <img src="{{ star.image }}" class="main-img">
+            {% else %}
+                <div class="no-data-placeholder">No Visual Data Available</div>
+            {% endif %}
+        </div>
+    </section>
+
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>System Analysis</h3>
+            <p>{{ star.description }}</p>
+            <hr>
+            <p><strong>Parent Galaxy:</strong> 
+                <a href="/galaxies/{{ star.Galaxy.id }}">{{ star.Galaxy.name }}</a>
+            </p>
+            
+            <h4>Orbiting Bodies:</h4>
+            <ul>
+                {% for planet in star.Planets %}
+                    <li><a href="/planets/{{ planet.id }}">{{ planet.name }}</a> ({{ planet.type }})</li>
+                {% else %}
+                    <li>No planets detected in this system.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+<aside class="sidebar">
+    <div class="glass-panel">
+        <h3>Register Planet</h3>
+        <form action="/planets" method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Planet Name" required>
+            <input type="text" name="type" placeholder="Type (e.g. Terrestrial)">
+            <select name="starId">
+                {% for star in stars %}
+                    <option value="{{ star.id }}">{{ star.name }}</option>
+                {% endfor %}
+            </select>
+            <textarea name="description" placeholder="Observation Log"></textarea>
+            <div class="upload-wrapper">
+                <label for="img-upload" class="file-label">Select Image</label>
+                <input type="file" name="image" id="img-upload" class="hidden-input">
+            </div>
+            <button type="submit">Deploy Probe</button>
+        </form>
+    </div>
+</aside>
+
+<section class="content-area">
+    <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+        {% for planet in planets %}
+            <div class="card">
+                {% if planet.image %}
+                    <img src="{{ planet.image }}" class="card-thumb">
+                {% endif %}
+                <h3>{{ planet.name }}</h3>
+                <p>System: {{ planet.Star.name }}</p>
+                <a href="/planets/{{ planet.id }}">View Telemetry</a>
+            </div>
+        {% else %}
+            <div class="glass-panel">No planets found in this sector.</div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

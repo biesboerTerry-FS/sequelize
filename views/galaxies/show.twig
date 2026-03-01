@@ -1,0 +1,53 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+<div class="main-container">
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>Update Registry</h3>
+            <form action="/galaxies/{{ galaxy.id }}" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" value="{{ galaxy.name }}" required>
+                <input type="number" name="size" value="{{ galaxy.size }}">
+                <textarea name="description" rows="5">{{ galaxy.description }}</textarea>
+                <input type="file" name="image">
+                
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn-primary" style="flex: 1;">Update</button>
+                </div>
+            </form>
+            
+            <a href="/{{ galaxies }}" class="btn-primary" style="display:block; text-align:center; margin-top:10px; background: rgba(255,255,255,0.05);">Cancel</a>
+
+            {# Moved Purge button here to match Stars layout #}
+            <form action="/galaxies/{{ galaxy.id }}/?_method=DELETE" method="POST" style="margin-top: 10px;">
+                <button type="submit" class="btn-danger" style="width: 100%;">Purge Registry</button>
+            </form>
+        </div>
+    </aside>
+
+    <section class="content-area">
+        <div class="glass-panel" style="text-align: center;">
+            <h1>{{ galaxy.name }}</h1>
+            {% if galaxy.image %}
+                <img src="{{ galaxy.image }}" class="main-img" style="max-width: 100%; border-radius: 4px;">
+            {% else %}
+                <div style="height: 300px; display: flex; align-items: center; justify-content: center; border: 1px dashed white;">
+                    <p>No Visual Data Available</p>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>Galactic Logs</h3>
+            <p><strong>ID:</strong> G-{{ galaxy.id }}</p>
+            <p><strong>Span:</strong> {{ galaxy.size }} LY</p>
+            <p><strong>System Count:</strong> {{ galaxy.Stars | length }}</p>
+            <hr style="border-color: var(--glass-border);">
+            <p>{{ galaxy.description }}</p>
+            {# Removed Purge link from here #}
+        </div>
+    </aside>
+</div>
+{% endblock %}

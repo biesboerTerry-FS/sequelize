@@ -1,0 +1,45 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+	<aside class="sidebar">
+		<div class="glass-panel">
+			<h3>Register Star</h3>
+			<form action="/stars" method="POST" enctype="multipart/form-data">
+				<input type="text" name="name" placeholder="Star Name" required>
+				<select name="GalaxyId">
+					{% for galaxy in galaxies %}
+						<option value="{{ galaxy.id }}">{{ galaxy.name }}</option>
+					{% endfor %}
+				</select>
+				<textarea name="description" placeholder="Stellar Observations"></textarea>
+				<div class="upload-wrapper">
+					<label for="img-upload" class="file-label">
+						Select Image
+					</label>
+					<input type="file" name="image" id="img-upload" class="hidden-input">
+					<button type="submit" class="btn-primary">Ignite Core</button>
+
+				</div>
+			</form>
+		</div>
+	</aside>
+
+	<section class="content-area">
+		<div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+			{% for star in stars %}
+				<div class="card">
+					{% if star.image %}
+						<img src="{{ star.image }}" class="card-thumb">
+					{% endif %}
+					<h3>{{ star.name }}</h3>
+					<p>Galaxy:
+						<a href="/galaxies/{{ star.Galaxy.id }}">{{ star.Galaxy.name }}</a>
+					</p>
+					<a href="/stars/{{ star.id }}">Analyze Spectra</a>
+				</div>
+			{% else %}
+				<div class="glass-panel">No stellar bodies cataloged.</div>
+			{% endfor %}
+		</div>
+	</section>
+{% endblock %}

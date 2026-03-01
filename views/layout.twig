@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Star Tracker Library</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="stylesheet" href="/css/style.css">
+		<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<header class="main-nav glass-panel">
+			<div class="nav-flex">
+				<a href="/" class="logo">
+					StarTracker
+					{% if activeSegment %}
+						<span class="nav-breadcrumb">/{{ activeSegment }}</span>
+					{% endif %}
+				</a>
+				<nav>
+					<a href="/galaxies" class="{{ activeSegment == 'galaxies' ? 'nav-active' : '' }}">Galaxies</a>
+					<a href="/stars" class="{{ activeSegment == 'stars' ? 'nav-active' : '' }}">Stars</a>
+					<a href="/planets" class="{{ activeSegment == 'planets' ? 'nav-active' : '' }}">Planets</a>
+				</nav>
+			</div>
+		</header>
+
+		<main class="main-container"> {% block content %}{% endblock %}
+			</main>
+		</body>
+	</html>

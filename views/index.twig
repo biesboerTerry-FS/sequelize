@@ -1,0 +1,44 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+<div class="landing-container">
+    <div class="glass-panel dashboard-stats">
+        <div class="stat-item">
+            <span class="stat-value">{{ galaxies|length }}</span>
+            <span class="stat-label">Galaxies Found</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-value">{{ stars|length }}</span>
+            <span class="stat-label">Stars Cataloged</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-value">{{ planets|length }}</span>
+            <span class="stat-label">Planets Scanned</span>
+        </div>
+    </div>
+
+    <h1 class="main-title">Celestial Registry</h1>
+    
+    <div class="category-grid">
+        <div class="card category-card">
+            <h3>Galaxies</h3>
+            <p>Major galactic clusters and nebulae.</p>
+            <a href="/galaxies" class="btn-primary">Access Records</a>
+        </div>
+        
+        <div class="card category-card">
+            <h3>Stars</h3>
+            <p>Spectral data for stellar bodies.</p>
+            <a href="/stars" class="btn-primary">Analyze Spectra</a>
+        </div>
+        
+        <div class="card category-card">
+            <h3>Planets</h3>
+            <p>Terrestrial and Gas Giant telemetry.</p>
+            <a href="/planets" class="btn-primary">View Planets</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
