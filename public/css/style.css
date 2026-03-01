@@ -1,0 +1,274 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=VT323&display=swap');
+
+:root {
+    --bg-dark: #05050a;
+    --glass-bg: rgba(255, 255, 255, 0.07);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --white-glow: 0 0 15px rgba(255, 255, 255, 0.2);
+    --visited-yellow: #ffff00;
+}
+
+body {
+    background: var(--bg-dark) url('https://www.transparenttextures.com/patterns/stardust.png');
+    color: #e0e0e0;
+    font-family: 'VT323', monospace;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* Links: Yellow if visited, White otherwise, no underscores */
+a { color: white; text-decoration: none; transition: 0.3s; }
+a:visited { color: var(--visited-yellow); }
+a:hover { text-shadow: 0 0 8px white; text-decoration: none; }
+
+h1, h2, h3, .logo, button { font-family: 'Orbitron', sans-serif; text-transform: uppercase; }
+
+/* Global Container Layout */
+.main-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 5%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Sidebar Styling (Forms) */
+.sidebar { flex: 0 0 320px; }
+.content-area { flex: 1; min-width: 0; }
+
+.glass-panel, .card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--white-glow);
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* Image Constraints */
+.card-thumb {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.main-img {
+    /* width: 100%;
+    max-width: 600px; 
+    max-height: 400px;
+    object-fit: contain;
+    margin: 20px 0; */
+    max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* Forms */
+input, textarea, select {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-family: 'VT323', monospace;
+}
+
+.main-nav a { 
+    color: white; 
+    text-decoration: none; 
+    transition: 0.3s; 
+    font-size: 1.5rem; /* Increased font size for header links */
+    font-family: 'Orbitron', sans-serif;
+}
+
+h3, .card h3 { 
+    font-size: 1.8rem; /* Increased font size for item names */
+    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: var(--white-glow);
+}
+
+/* Hide the ugly default input */
+input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+/* Style the label to look like your buttons */
+.file-label {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: #e0e0e0;
+    font-family: 'VT323', monospace;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.file-label:hover {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: var(--white-glow);
+}
+
+/* Standard Button styling (Update to match) */
+button, .btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: white;
+    color: black;
+}
+
+/* Stats Dashboard */
+.dashboard-stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 50px;
+    padding: 30px;
+}
+
+.stat-item { text-align: center; }
+.stat-value { font-size: 2.5rem; display: block; color: #fff; text-shadow: var(--white-glow); }
+.stat-label { font-size: 1rem; color: #aaa; text-transform: uppercase; }
+.stat-divider { width: 1px; height: 50px; background: var(--glass-border); }
+
+/* Home Page Categories Fix */
+.category-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.category-card {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Styled File Upload */
+.upload-wrapper {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+input[type="file"].hidden-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.file-label {
+  display: block;
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.file-label:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.no-data-placeholder {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed var(--glass-border);
+    color: #666;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.nav-flex nav a {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;           
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* The active state: Yellow text */
+.nav-active {
+    color: var(--visited-yellow) !important;
+}
+
+/* The line under the active category */
+.nav-active::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--visited-yellow);
+    box-shadow: 0 0 8px var(--visited-yellow);
+}
+
+/* Dynamic Breadcrumb opacity */
+.nav-breadcrumb {
+    opacity: 0.5;
+    margin-left: 5px;
+}
+
+/* Active Category Styling */
+.nav-active {
+    color: var(--visited-yellow) !important;
+    position: relative;
+    display: inline-block;
+}
+
+.nav-active::after {
+    content: '';
+    position: absolute;
+    width: 100%; /* Matches text width */
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--visited-yellow);
+    box-shadow: 0 0 8px var(--visited-yellow);
+}
+ 

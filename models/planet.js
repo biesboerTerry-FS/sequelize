@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     isGasGiant: DataTypes.BOOLEAN,
     type: DataTypes.STRING,
-    starId: DataTypes.INTEGER
+    starId: DataTypes.INTEGER,
+    image: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Planet',

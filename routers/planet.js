@@ -1,18 +1,14 @@
-// Load in Express framework
-const express = require(`express`)
+const express = require(`express`);
+const planetCtlr = require(`../controllers/planet.js`);
+const upload = require('../middleware/uploader.js');
+const router = new express.Router();
 
-// Load in our controller/action instances
-const planetCtlr = require(`../controllers/planet.js`)
+router.get(`/`, planetCtlr.index);
+router.post(`/`, upload.single('image'), planetCtlr.create);
+router.get(`/:id`, planetCtlr.show);
+router.post(`/:id`, upload.single('image'), planetCtlr.update);
+router.put(`/:id`, upload.single('image'), planetCtlr.update);
+router.get(`/:id/delete`, planetCtlr.remove);
+router.delete(`/:id`, planetCtlr.remove);
 
-// Create a new Router instance and call it "router"
-const router = new express.Router()
-
-// RESTful resource mappings
-router.get(`/`, planetCtlr.index)
-router.post(`/`, planetCtlr.create)
-router.get(`/:id`, planetCtlr.show) 
-router.put(`/:id`, planetCtlr.update) 
-router.delete(`/:id`, planetCtlr.remove) 
-
-// export "router"
-module.exports = router
+module.exports = router;
