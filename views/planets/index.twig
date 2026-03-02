@@ -1,41 +1,60 @@
 {% extends 'layout.twig' %}
 
 {% block content %}
-<aside class="sidebar">
-    <div class="glass-panel">
-        <h3>Register Planet</h3>
-        <form action="/planets" method="POST" enctype="multipart/form-data">
-            <input type="text" name="name" placeholder="Planet Name" required>
-            <input type="text" name="type" placeholder="Type (e.g. Terrestrial)">
-            <select name="starId">
-                {% for star in stars %}
-                    <option value="{{ star.id }}">{{ star.name }}</option>
-                {% endfor %}
-            </select>
-            <textarea name="description" placeholder="Observation Log"></textarea>
-            <div class="upload-wrapper">
-                <label for="img-upload" class="file-label">Select Image</label>
-                <input type="file" name="image" id="img-upload" class="hidden-input">
-            </div>
-            <button type="submit">Deploy Probe</button>
-        </form>
-    </div>
-</aside>
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>Register Planet</h3>
+            <form action="/planets" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Planet Name" required>
+                <input type="text" name="type" placeholder="Planet Type (e.g. Terrestrial)">
+         
+                <div class="form-group" style="margin: 10px 0;">
+                    <label style="color: var(--glass-text);">Gas Giant?</label>
+                    <input type="checkbox" name="isGasGiant" value="true">
+                </div>
 
-<section class="content-area">
-    <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
-        {% for planet in planets %}
-            <div class="card">
-                {% if planet.image %}
-                    <img src="{{ planet.image }}" class="card-thumb">
-                {% endif %}
-                <h3>{{ planet.name }}</h3>
-                <p>System: {{ planet.Star.name }}</p>
-                <a href="/planets/{{ planet.id }}">View Telemetry</a>
-            </div>
-        {% else %}
-            <div class="glass-panel">No planets found in this sector.</div>
-        {% endfor %}
-    </div>
-</section>
+                <div class="form-group" style="margin: 10px 0;">
+                    <label style="color: var(--glass-text);">Assign Star System:</label>
+                    <select name="starId" required style="width: 100%; padding: 8px; border-radius: 4px; background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--glass-border);">
+                        <option value="" disabled selected>Select a Star</option>
+                        {% for star in stars %}
+                            <option value="{{ star.id }}">{{ star.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <textarea name="description" placeholder="Planetary Description"></textarea>
+                
+                <div class="upload-wrapper">
+                    <label for="img-upload" class="file-label">Select Image</label>
+                    <input type="file" name="image" id="img-upload" class="hidden-input">
+                </div>
+                <button type="submit" class="btn-primary">Initialize Registry</button>
+            </form>
+        </div>
+    </aside>
+
+    <section class="content-area">
+        <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+            {% for planet in planets %}
+                <div class="card">
+                    {% if planet.image %}
+                        <img src="{{ planet.image }}" class="card-thumb" alt="{{ planet.name }}">
+                    {% else %}
+                        <div class="card-thumb no-visual-box" style="height: 200px;">No Signal</div>
+                    {% endif %}
+                    
+                    <h3>{{ planet.name }}</h3>
+                    <p><strong>Type:</strong> {{ planet.type }}</p>
+                    
+                    <p><strong>System:</strong> {{ planet.Star.name }}</p>
+                    
+                    <p>{{ planet.description | slice(0, 100) }}...</p>
+                    <a href="/planets/{{ planet.id }}" class="btn-primary" style="margin-top: 10px;">Enter Coordinates</a>
+                </div>
+            {% else %}
+                <div class="glass-panel">No planetary bodies detected in this sector.</div>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}

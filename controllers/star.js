@@ -3,7 +3,7 @@ const { Star, Planet, Galaxy } = require("../models");
 const index = async (req, res) => {
   try {
     const stars = await Star.findAll({ include: [Planet, Galaxy] });
-    const galaxies = await Galaxy.findAll(); // For the "Create" form on index
+    const galaxies = await Galaxy.findAll(); 
     if (req.headers.accept && req.headers.accept.includes('text/html')) {
       return res.render('stars/index', { stars, galaxies });
     }
@@ -16,7 +16,7 @@ const index = async (req, res) => {
 const show = async (req, res) => {
   try {
     const star = await Star.findByPk(req.params.id, { include: [Planet, Galaxy] });
-    const galaxies = await Galaxy.findAll(); // For the "Update" dropdown
+    const galaxies = await Galaxy.findAll(); 
     if (req.headers.accept && req.headers.accept.includes('text/html')) {
       return res.render('stars/show', { star, galaxies });
     }

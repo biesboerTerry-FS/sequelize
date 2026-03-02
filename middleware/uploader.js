@@ -2,9 +2,6 @@ const multer = require('multer');
 const path = require('path');
 
 const storage = multer.diskStorage({
-  // destination: (req, file, cb) => {
-  //   cb(null, './public/uploads');
-  // },
   destination: (req, file, cb) => {
     const segment = req.baseUrl.split('/')[1] || 'misc';
     const uploadPath = `./public/uploads/${segment}`;

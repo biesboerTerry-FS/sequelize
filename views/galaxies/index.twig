@@ -1,40 +1,87 @@
 {% extends 'layout.twig' %}
 
 {% block content %}
-	<aside class="sidebar">
-		<div class="glass-panel">
-			<h3>Register Galaxy</h3>
-			<form action="/galaxies" method="POST" enctype="multipart/form-data">
-				<input type="text" name="name" placeholder="Galaxy Name" required>
-				<input type="number" name="size" placeholder="Size (Light Years)">
-				<textarea name="description" placeholder="Galactic Description"></textarea>
-				<div class="upload-wrapper">
-					<label for="img-upload" class="file-label">
-						Select Image
-					</label>
-					<input type="file" name="image" id="img-upload" class="hidden-input">
-				</div>
-				<button type="submit" class="btn-primary">Initialize Registry</button>
-			</form>
-		</div>
-	</aside>
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>Register Galaxy</h3>
+            {# Action points to /galaxies which triggers the 'create' function in galaxy.js #}
+            <form action="/galaxies" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Galaxy Name" required>
+                <input type="number" name="size" placeholder="Size (Light Years)">
+          
+                <textarea name="description" placeholder="Galactic Description"></textarea>
+                
+                <div class="upload-wrapper">
+                    <label for="img-upload" class="file-label">Select Image</label>
+                    <input type="file" name="image" id="img-upload" class="hidden-input">
+                </div>
+           
+                <button type="submit" class="btn-primary">Initialize Registry</button>
+            </form>
+        </div>
+    </aside>
 
-	<section class="content-area">
-		<div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
-			{% for galaxy in galaxies %}
-				<div class="card">
-					{% if galaxy.image %}
-						<img src="{{ galaxy.image }}" class="card-thumb">
-					{% endif %}
-					<h3>{{ galaxy.name }}</h3>
-					<p>{{ galaxy.description | slice(0, 80) }}...</p>
-					<div style="margin-top: 15px;">
-						<a href="/galaxies/{{ galaxy.id }}">Enter Coordinates</a>
-					</div>
-				</div>
-			{% else %}
-				<div class="glass-panel">No galactic clusters detected in this sector.</div>
-			{% endfor %}
-		</div>
-	</section>
+    <section class="content-area">
+        <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+            {% for galaxy in galaxies %}
+                <div class="card">
+                    {% if galaxy.image %}
+                        <img src="{{ galaxy.image }}" class="card-thumb" alt="{{ galaxy.name }}">
+                    {% else %}
+                        <div class="card-thumb no-visual-box" style="height: 200px;">No Signal</div>
+                    {% endif %}
+                    
+                    <h3>{{ galaxy.name }}</h3>
+                    <p><strong>Span:</strong> {{ galaxy.size | number_format }} LY</p>
+                    <p>{{ galaxy.description | slice(0, 100) }}...</p>
+                    <a href="/galaxies/{{ galaxy.id }}" class="btn-primary" style="margin-top: 10px;">Enter Coordinates</a>
+                </div>
+            {% else %}
+                <div class="glass-panel">No galactic clusters detected in this sector.</div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}{% extends 'layout.twig' %}
+
+{% block content %}
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>Register Galaxy</h3>
+            {# Action points to /galaxies which triggers the 'create' function in galaxy.js #}
+            <form action="/galaxies" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Galaxy Name" required>
+                <input type="number" name="size" placeholder="Size (Light Years)">
+          
+                <textarea name="description" placeholder="Galactic Description"></textarea>
+                
+                <div class="upload-wrapper">
+                    <label for="img-upload" class="file-label">Select Image</label>
+                    <input type="file" name="image" id="img-upload" class="hidden-input">
+                </div>
+           
+                <button type="submit" class="btn-primary">Initialize Registry</button>
+            </form>
+        </div>
+    </aside>
+
+    <section class="content-area">
+        <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+            {% for galaxy in galaxies %}
+                <div class="card">
+                    {% if galaxy.image %}
+                        <img src="{{ galaxy.image }}" class="card-thumb" alt="{{ galaxy.name }}">
+                    {% else %}
+                        <div class="card-thumb no-visual-box" style="height: 200px;">No Signal</div>
+                    {% endif %}
+                    
+                    <h3>{{ galaxy.name }}</h3>
+                    <p><strong>Span:</strong> {{ galaxy.size | number_format }} LY</p>
+                    <p>{{ galaxy.description | slice(0, 100) }}...</p>
+                    <a href="/galaxies/{{ galaxy.id }}" class="btn-primary" style="margin-top: 10px;">Enter Coordinates</a>
+                </div>
+            {% else %}
+                <div class="glass-panel">No galactic clusters detected in this sector.</div>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}

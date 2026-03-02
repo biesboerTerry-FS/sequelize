@@ -16,7 +16,6 @@ const show = async (req, res) => {
   try {
     const galaxy = await Galaxy.findByPk(req.params.id, { include: [Star] });
     if (req.headers.accept && req.headers.accept.includes('text/html')) {
-      // Show page now acts as the View and Update form
       return res.render('galaxies/show', { galaxy });
     }
     res.status(200).json(galaxy);
