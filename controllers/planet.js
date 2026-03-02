@@ -3,7 +3,7 @@ const { Planet, Star } = require("../models");
 const index = async (request, response) => {
   try {
     const planets = await Planet.findAll({ include: [Star] });
-    const stars = await Star.findAll(); // For the "Create" form on index
+    const stars = await Star.findAll(); 
     if (request.headers.accept && request.headers.accept.includes('text/html')) {
       return response.render("planets/index", { planets, stars });
     }
@@ -16,7 +16,7 @@ const index = async (request, response) => {
 const show = async (request, response) => {
   try {
     const planet = await Planet.findByPk(request.params.id, { include: [Star] });
-    const stars = await Star.findAll(); // For the "Update" dropdown
+    const stars = await Star.findAll(); 
     if (!planet) return response.status(404).json({ error: "Planet not found" });
     if (request.headers.accept.includes('text/html')) {
       return response.render("planets/show", { planet, stars });

@@ -1,44 +1,40 @@
 {% extends 'layout.twig' %}
 
 {% block content %}
-<div class="landing-container">
-    <div class="glass-panel dashboard-stats">
-        <div class="stat-item">
-            <span class="stat-value">{{ galaxies|length }}</span>
-            <span class="stat-label">Galaxies Found</span>
+<div class="main-container">
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>Register Star</h3>
+            <form action="/stars" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Star Name" required>
+                <select name="GalaxyId">
+                    {% for galaxy in galaxies %}
+                        <option value="{{ galaxy.id }}">{{ galaxy.name }}</option>
+                    {% endfor %}
+                </select>
+                <textarea name="description" placeholder="Stellar Observations"></textarea>
+                <div class="upload-wrapper">
+                    <label for="img-upload" class="file-label">Select Image</label>
+                    <input type="file" name="image" id="img-upload" class="hidden-input">
+                </div>
+                <button type="submit" class="btn-primary">Ignite Core</button>
+            </form>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-            <span class="stat-value">{{ stars|length }}</span>
-            <span class="stat-label">Stars Cataloged</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-            <span class="stat-value">{{ planets|length }}</span>
-            <span class="stat-label">Planets Scanned</span>
-        </div>
-    </div>
+    </aside>
 
-    <h1 class="main-title">Celestial Registry</h1>
-    
-    <div class="category-grid">
-        <div class="card category-card">
-            <h3>Galaxies</h3>
-            <p>Major galactic clusters and nebulae.</p>
-            <a href="/galaxies" class="btn-primary">Access Records</a>
+    <section class="content-area">
+        <div class="grid">
+            {% for star in stars %}
+                <div class="card">
+                    {% if star.image %}
+                        <img src="{{ star.image }}" class="card-thumb" alt="{{ star.name }}">
+                    {% endif %}
+                    <h3>{{ star.name }}</h3>
+                    <p>Galaxy: <a href="/galaxies/{{ star.Galaxy.id }}">{{ star.Galaxy.name }}</a></p>
+                    <a href="/stars/{{ star.id }}" class="btn-primary">Analyze Data</a>
+                </div>
+            {% endfor %}
         </div>
-        
-        <div class="card category-card">
-            <h3>Stars</h3>
-            <p>Spectral data for stellar bodies.</p>
-            <a href="/stars" class="btn-primary">Analyze Spectra</a>
-        </div>
-        
-        <div class="card category-card">
-            <h3>Planets</h3>
-            <p>Terrestrial and Gas Giant telemetry.</p>
-            <a href="/planets" class="btn-primary">View Planets</a>
-        </div>
-    </div>
+    </section>
 </div>
 {% endblock %}

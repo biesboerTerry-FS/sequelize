@@ -1,29 +1,31 @@
 {% extends 'layout.twig' %}
 
 {% block content %}
-<div class="main-container">
     <aside class="sidebar">
         <div class="glass-panel">
-            <h3>Modify Data</h3>
+            <h3>Modify Telemetry</h3>
             <form action="/planets/{{ planet.id }}?_method=PUT" method="POST" enctype="multipart/form-data">
-                <input type="text" name="name" value="{{ planet.name }}">
-                <input type="text" name="type" value="{{ planet.type }}">
+                <input type="text" name="name" value="{{ planet.name }}" required>
+                <input type="text" name="type" value="{{ planet.type }}" placeholder="Planet Type">
+                
                 <select name="starId">
                     {% for star in stars %}
                         <option value="{{ star.id }}" {% if star.id == planet.starId %}selected{% endif %}>{{ star.name }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="description">{{ planet.description }}</textarea>
+
+                <textarea name="description" rows="6">{{ planet.description }}</textarea>
                 
-                <label for="planet-upload" class="file-label">SELECT IMAGE</label>
-                <input type="file" name="image" id="planet-upload" class="hidden-input">
+                <div class="upload-wrapper">
+                    <label for="planet-upload" class="file-label">Update Image</label>
+                    <input type="file" name="image" id="planet-upload" class="hidden-input">
+                </div>
                 
-                <button type="submit" class="btn-primary" style="display:block; width:100%; text-align:center; background: rgba(255,255,255,0.05);">Update Core</button>
+                <button type="submit" class="btn-primary">Update Core</button>
             </form>
-            <a href="/planets" class="btn-primary" style="display:block; text-align:center; margin-top:10px; background: rgba(255,255,255,0.05);">Cancel</a>
             
             <form action="/planets/{{ planet.id }}?_method=DELETE" method="POST" style="margin-top: 10px;">
-                <button type="submit" class="btn-danger" style="width: 100%;">Purge Planet</button>
+                <button type="submit" style="color: #ff4444; border-color: #ff4444;">Purge Planet</button>
             </form>
         </div>
     </aside>
@@ -32,22 +34,16 @@
         <div class="glass-panel" style="text-align: center;">
             <h1>{{ planet.name }}</h1>
             {% if planet.image %}
-                <img src="{{ planet.image }}" class="main-img">
+                <img src="{{ planet.image }}" class="main-img" alt="{{ planet.name }}">
+            {% else %}
+                <div class="no-visual-box">No Planetary Visuals Available</div>
             {% endif %}
-            <p style="margin-top:20px;">{{ planet.description }}</p>
+            
+            <div style="text-align: left; margin-top: 25px; padding: 0 20px;">
+                <p><strong>Classification:</strong> {{ planet.type }}</p>
+                <p><strong>Orbiting Star:</strong> <a href="/stars/{{ planet.Star.id }}">{{ planet.Star.name }}</a></p>
+                <p style="font-size: 1.1rem; line-height: 1.6;">{{ planet.description }}</p>
+            </div>
         </div>
     </section>
-
-    <aside class="sidebar">
-        <div class="glass-panel">
-            <h3>Telemetry</h3>
-            <p><strong>Identifier:</strong> P-{{ planet.id }}</p>
-            <p><strong>Classification:</strong> {{ planet.type }}</p>
-            <p><strong>Orbiting Star:</strong> 
-                <a href="/stars/{{ planet.Star.id }}">{{ planet.Star.name }}</a>
-            </p>
-            <p><strong>Sector:</strong> {{ planet.Star.Galaxy.name }} Galaxy</p>
-        </div>
-    </aside>
-</div>
 {% endblock %}

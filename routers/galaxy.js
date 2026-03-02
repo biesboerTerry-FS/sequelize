@@ -6,8 +6,8 @@ const router = new express.Router();
 router.get(`/`, galaxyCtlr.index);
 router.post(`/`, upload.single('image'), galaxyCtlr.create);
 router.get(`/:id`, galaxyCtlr.show);
-router.post(`/:id`, upload.single('image'), galaxyCtlr.update); // Handles form update
-router.put(`/:id`, upload.single('image'), galaxyCtlr.update); // Handles API update
+router.post(`/:id`, upload.single('image'), galaxyCtlr.update); 
+router.put(`/:id`, upload.single('image'), galaxyCtlr.update); 
 router.get(`/:id/delete`, galaxyCtlr.remove); 
 router.delete(`/:id`, galaxyCtlr.remove);
 

@@ -1,0 +1,33 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+<section class="content-area" style="width: 100%; max-width: 1200px; margin: 0 auto;">
+    <div class="glass-panel" style="text-align: center; margin-bottom: 30px;">
+        <h1>Mainframe Dashboard</h1>
+        <p>Centralized Access to Universal Registry Data</p>
+    </div>
+
+    <div class="grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <div class="card" style="text-align: center;">
+            <div class="stat-number" style="font-size: 3rem; color: var(--neon-blue);">{{ galaxies|length }}</div>
+            <h3>Galaxies</h3>
+            <p>Known Galactic Clusters</p>
+            <a href="/galaxies" class="btn-primary" style="display: block; margin-top: 15px;">Enter Sector</a>
+        </div>
+
+        <div class="card" style="text-align: center;">
+            <div class="stat-number" style="font-size: 3rem; color: var(--neon-blue);">{{ stars|length }}</div>
+            <h3>Stars</h3>
+            <p>Mapped Stellar Bodies</p>
+            <a href="/stars" class="btn-primary" style="display: block; margin-top: 15px;">Enter Sector</a>
+        </div>
+
+        <div class="card" style="text-align: center;">
+            <div class="stat-number" style="font-size: 3rem; color: var(--neon-blue);">{{ planets|length }}</div>
+            <h3>Planets</h3>
+            <p>Cataloged Planetary Systems</p>
+            <a href="/planets" class="btn-primary" style="display: block; margin-top: 15px;">Enter Sector</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,45 +1,109 @@
 {% extends 'layout.twig' %}
 
 {% block content %}
-	<aside class="sidebar">
-		<div class="glass-panel">
-			<h3>Register Star</h3>
-			<form action="/stars" method="POST" enctype="multipart/form-data">
-				<input type="text" name="name" placeholder="Star Name" required>
-				<select name="GalaxyId">
-					{% for galaxy in galaxies %}
-						<option value="{{ galaxy.id }}">{{ galaxy.name }}</option>
-					{% endfor %}
-				</select>
-				<textarea name="description" placeholder="Stellar Observations"></textarea>
-				<div class="upload-wrapper">
-					<label for="img-upload" class="file-label">
-						Select Image
-					</label>
-					<input type="file" name="image" id="img-upload" class="hidden-input">
-					<button type="submit" class="btn-primary">Ignite Core</button>
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>Catalog Star</h3>
+            <form action="/stars" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Star Name" required>
+                <input type="number" name="size" placeholder="Solar Radii">
+                
+                {# ADDED: Galaxy Selection for Star Creation #}
+                <div class="form-group" style="margin: 10px 0;">
+                    <label style="color: var(--glass-text); display: block; margin-bottom: 5px;">Assign Galaxy:</label>
+                    <select name="GalaxyId" required style="width: 100%; padding: 10px; border-radius: 5px; background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(5px);">
+                        <option value="" disabled selected>Select a Galaxy</option>
+                        {% for galaxy in galaxies %}
+                            <option value="{{ galaxy.id }}">{{ galaxy.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-				</div>
-			</form>
-		</div>
-	</aside>
+                <textarea name="description" placeholder="Stellar Classification/Data"></textarea>
+                
+                <div class="upload-wrapper">
+                    <label for="img-upload" class="file-label">Select Image</label>
+                    <input type="file" name="image" id="img-upload" class="hidden-input">
+                </div>
+            
+                <button type="submit" class="btn-primary">Sync Stellar Data</button>
+            </form>
+        </div>
+    </aside>
 
-	<section class="content-area">
-		<div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
-			{% for star in stars %}
-				<div class="card">
-					{% if star.image %}
-						<img src="{{ star.image }}" class="card-thumb">
-					{% endif %}
-					<h3>{{ star.name }}</h3>
-					<p>Galaxy:
-						<a href="/galaxies/{{ star.Galaxy.id }}">{{ star.Galaxy.name }}</a>
-					</p>
-					<a href="/stars/{{ star.id }}">Analyze Spectra</a>
-				</div>
-			{% else %}
-				<div class="glass-panel">No stellar bodies cataloged.</div>
-			{% endfor %}
-		</div>
-	</section>
+    <section class="content-area">
+        <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+            {% for star in stars %}
+                <div class="card">
+                    {% if star.image %}
+                        <img src="{{ star.image }}" class="card-thumb" alt="{{ star.name }}">
+                    {% else %} 
+                        <div class="card-thumb no-visual-box" style="height: 200px;">No Signal</div>
+                    {% endif %}
+                    
+                    <h3>{{ star.name }}</h3>
+                    <p><strong>Galaxy:</strong> {{ star.Galaxy.name }}</p>
+                    <p><strong>Size:</strong> {{ star.size }} Solar Radii</p> 
+                    <p>{{ star.description | slice(0, 100) }}...</p>
+                    <a href="/stars/{{ star.id }}" class="btn-primary" style="margin-top: 10px;">View Star System</a>
+                </div>
+            {% else %}
+                <div class="glass-panel">No stellar signatures found.</div> 
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}{% extends 'layout.twig' %}
+
+{% block content %}
+    <aside class="sidebar">
+        <div class="glass-panel">
+            <h3>Catalog Star</h3>
+            <form action="/stars" method="POST" enctype="multipart/form-data">
+                <input type="text" name="name" placeholder="Star Name" required>
+                <input type="number" name="size" placeholder="Solar Radii">
+                
+                {# ADDED: Galaxy Selection for Star Creation #}
+                <div class="form-group" style="margin: 10px 0;">
+                    <label style="color: var(--glass-text); display: block; margin-bottom: 5px;">Assign Galaxy:</label>
+                    <select name="GalaxyId" required style="width: 100%; padding: 10px; border-radius: 5px; background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(5px);">
+                        <option value="" disabled selected>Select a Galaxy</option>
+                        {% for galaxy in galaxies %}
+                            <option value="{{ galaxy.id }}">{{ galaxy.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <textarea name="description" placeholder="Stellar Classification/Data"></textarea>
+                
+                <div class="upload-wrapper">
+                    <label for="img-upload" class="file-label">Select Image</label>
+                    <input type="file" name="image" id="img-upload" class="hidden-input">
+                </div>
+            
+                <button type="submit" class="btn-primary">Sync Stellar Data</button>
+            </form>
+        </div>
+    </aside>
+
+    <section class="content-area">
+        <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;"> 
+            {% for star in stars %}
+                <div class="card">
+                    {% if star.image %}
+                        <img src="{{ star.image }}" class="card-thumb" alt="{{ star.name }}">
+                    {% else %} 
+                        <div class="card-thumb no-visual-box" style="height: 200px;">No Signal</div>
+                    {% endif %}
+                    
+                    <h3>{{ star.name }}</h3>
+                    <p><strong>Galaxy:</strong> {{ star.Galaxy.name }}</p> 
+                    <p><strong>Size:</strong> {{ star.size }} Solar Radii</p> 
+                    <p>{{ star.description | slice(0, 100) }}...</p>
+                    <a href="/stars/{{ star.id }}" class="btn-primary" style="margin-top: 10px;">View Star System</a>
+                </div>
+            {% else %}
+                <div class="glass-panel">No stellar signatures found.</div> 
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}
